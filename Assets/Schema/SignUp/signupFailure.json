@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "timeStamp": "value",
+    "payLoadType": "value",
+    "service": "registration",
+    "subService": "signup"
+  },
+  "payLoad": [
+    {
+     "status":"failure",
+     ** AttributeList **
+    }
+  ],
+  "payLoadType":"value",
+  "error":{
+  	"code":"",
+  	"description":""
+  }
+}
