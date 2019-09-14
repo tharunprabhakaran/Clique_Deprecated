@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "timeStamp": "value",
+    "payLoadType": "value",
+    "service": "registration",
+    "subService": "passwordManagement"
+  },
+  "payLoad": [
+    {
+     "userid":"value",
+     "verificationToken":"value",
+     "action":"verification",
+     "status":"success"
+    }
+  ],
+  "payLoadType":"value",
+  "error":{
+  	"code":"",
+  	"description":""
+  }
+}

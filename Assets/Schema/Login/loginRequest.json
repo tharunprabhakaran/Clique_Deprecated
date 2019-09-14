@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "timeStamp": "value",
+    "payLoadType": "value",
+    "service": "registration",
+    "subService": "login"
+  },
+  "payLoad": [
+    {
+      "userName":"value",
+      "password":"value"
+    }
+  ],
+  "payLoadType":"value",
+  "error":{
+  	"code":"",
+  	"description":""
+  }
+}
