@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 var Roaster = {
     "name":"K9-Pug",
     "version":"0.1",
@@ -8,16 +10,18 @@ var Roaster = {
             [
                 {
                     "feild":"parameter",
-                    "assert":"isInt"
+                    "assert":"isIynt",
+                    "mandatory":true
                 },
                 {
                     "feild":"temporary",
-                    "assert":"isAlphaNumeric"
+                    "assert":"isAlphaNumeric",
+                    "mandatory":true
                 },
                 {
                     "feild":"parameter1",
-                    "assert":"isString",
-                    "mandatory":false
+                    "assert":"isPassword",
+                    "mandatory":true
                 
                 }
             ]
@@ -40,4 +44,4 @@ var Roaster = {
 
   module.exports = {
       Roaster
-  }
+  };
