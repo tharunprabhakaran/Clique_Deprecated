@@ -13,12 +13,14 @@ const canisterObject = require("./bin/canister");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const systemParametersModel = require('./bin/Schema/systemParameterModel');
-const DB_URL = "mongodb://localhost:27017/tharun";
+//const DB_URL = "mongodb://localhost:27017/tharun";
+const DB_URL = "mongodb+srv://admin:admin@cliquedevelopment1-0pdxl.mongodb.net/test?retryWrites=true&w=majority";
 const K9 = require("./modules/K9/K9");
 /*-------------------------------------*/
 
 /* ------------- DATABASE CONNECTION ------------- */
-var isDBAlive = mongoose.connect(DB_URL)
+mongoose.set('useNewUrlParser', true);
+var isDBAlive = mongoose.connect(DB_URL,{useUnifiedTopology: true})
     .then(()=>{return true;})
     .catch((err)=>{throw err;});
 
@@ -35,9 +37,16 @@ var logger = function(req,res,next){
 };
 
 var K9_Middleware = function(req,res,next){
-    K9(req.body);
+    console.log("Entering K9");
+    var validationResult = K9.K9(req.body);
     console.log("K9 Done");
-    next();
+    if(validationResult.result==false){
+        console.log(validationResult.errors);
+        res.status(500).json(validationResult);
+    }
+    else{
+        next();
+    }
 };
 
 /* Session Authentication */
@@ -60,7 +69,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(logger);
 app.use(K9_Middleware);
-app.use(sessionAuthentication);
+//app.use(sessionAuthentication);
 /*-------------------------*/
 
 
@@ -109,7 +118,7 @@ app.post('/info', function(req, res){
 
 /* ----- Server Startup -----*/
 app.listen(3000,function(){
-    console.log("Server Started localhost:3000")
+    console.log("Server Started localhost:3000");
 });
 /*---------------------------*/
 

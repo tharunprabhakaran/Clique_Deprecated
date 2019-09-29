@@ -10,7 +10,7 @@ var Roaster = {
             [
                 {
                     "feild":"parameter",
-                    "assert":"isIynt",
+                    "assert":"isInt",
                     "mandatory":true
                 },
                 {
