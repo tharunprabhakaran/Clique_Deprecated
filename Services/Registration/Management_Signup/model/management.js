@@ -5,8 +5,7 @@ const managementSchema = new mongoose.Schema({
         type: String,
         required : true,
         minlength : 6,
-        maxlength : 255,
-        match: [/^([a-zA-z])?$/, 'Please fill a valid name']
+        maxlength : 255
     },
     doj:{
         type : Date,
@@ -16,15 +15,13 @@ const managementSchema = new mongoose.Schema({
         type: String,
         required:true,
         minlength : 3,
-        maxlength : 255,
-        match: [/^([a-zA-z])?$/, 'Please fill a valid country']
+        maxlength : 255
     }, 
     city:{
         type: String,
         required:true,
         minlength : 3,
-        maxlength : 255,
-        match: [/^([a-zA-z])?$/, 'Please fill a valid country']
+        maxlength : 255
     }, 
     address:{
         type: String,
