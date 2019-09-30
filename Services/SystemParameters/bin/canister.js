@@ -16,5 +16,5 @@ var canister = {
         "code":"",
         "description":""
     }
-  }
-module.exports = canister
+  };
+module.exports = canister;

@@ -38,9 +38,26 @@ var Roaster = {
                     "assert":"isString"
                 }
             ]
+        },
+        "createSystemParameters":{
+            "validations":
+            [
+                {
+                    "feild":"parameter",
+                    "assert":"isAlphaNumeric"
+                },
+                {
+                    "feild":"value",
+                    "assert":"isAlphaNumeric"
+                },
+                {
+                    "feild":"description",
+                    "assert":"isAlphaNumeric"
+                }
+            ]
         }
     }
-  }
+  };
 
   module.exports = {
       Roaster

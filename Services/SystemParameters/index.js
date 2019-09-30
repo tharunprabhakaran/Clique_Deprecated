@@ -37,9 +37,14 @@ var logger = function(req,res,next){
 };
 
 var K9_Middleware = function(req,res,next){
+    if(req.method == "GET"){
+        console.log("Request -> GET");
+        next();
+    }else{
     console.log("Entering K9");
     var validationResult = K9.K9(req.body);
     console.log("K9 Done");
+    
     if(validationResult.result==false){
         console.log(validationResult.errors);
         res.status(500).json(validationResult);
@@ -47,20 +52,21 @@ var K9_Middleware = function(req,res,next){
     else{
         next();
     }
+}
 };
 
 /* Session Authentication */
 var sessionAuthentication = function(req,res,next){
 
     if(req.headers.sessiontoken == 123){
-        next()   
+        next();   
     } else{
         var responseCanister = canisterObject;
-        responseCanister.error.code = "SP1000"
-        responseCanister.error.description = "UnAuthorised Access"
+        responseCanister.error.code = "SP1000";
+        responseCanister.error.description = "UnAuthorised Access";
         res.json(responseCanister).status(200); 
     }
-}
+};
 /* ----------------------- */
 
 
@@ -77,7 +83,7 @@ app.use(K9_Middleware);
 /* ------ ENDPOINTS ----- */
 
 // ** INFO ** 
-app.post('/info', function(req, res){
+app.get('/info', function(req, res){
     var responseCanister = canisterObject;
     var payLoad = {
         "serviceID":"systemParameters",
@@ -92,26 +98,68 @@ app.post('/info', function(req, res){
  });
 
  // ** QueryAll SystemParameters **
- app.get("/allSystemParameters",function(req, res){
-     res.json("All System Paramters").status(200);
+ app.get("/parameter",function(req, res){
+    systemParametersModel.find({},function(err,resultSet){
+        console.log(resultSet);
+        var responseCanister =canisterObject;
+        var payLoad = [];
+        resultSet.forEach(element => {
+            payLoad.push(element);
+        }); 
+        responseCanister.payLoad=payLoad;
+        res.json(responseCanister).status(200);
+    });
  });
 
  // ** Query Parameter **
- app.get("/parameter",function(req,res){
-     res.json("Get Parameter").status(200);
+ app.get("/parameter/:parameterName",function(req,res){
+     console.log("Query for -->"+req.params.parameterName);
+     systemParametersModel.find({parameter:req.params.parameterName}, function(err,resultSet){
+        //console.log(resultSet);
+        var responseCanister =canisterObject;
+        var payLoad = [];
+        resultSet.forEach(element => {
+            payLoad.push(element);
+        });
+        responseCanister.payLoad=payLoad;
+        res.json(responseCanister).status(200);
+     });
+     
  });
 
 
  // ** Create New Parameter **
  app.post("/parameter",function(req,res){
     
-    var systemParameter = new systemParametersModel({parameter:"TestParam",value:"TestVal",description:"TestDesc"});
-    systemParameter.save()
-        .then((err,resp) => res.json("Get Parameter").status(200))
-        .catch((err,resp) => {res.json("Failed Parameter").status(200);});
+    var payLoad = req.body.payLoad;
+    payLoad.forEach(element => {
+        var systemParameter = new systemParametersModel({
+            parameter:element.parameter,
+            value:element.value,
+            description:element.description
+        });
+
+        systemParameter.save()
+    
+            //Handle Database save positive case
+            .then((err,resp) => {
+              console.log("DB Saved ->"+element);
+            })
+    
+            //Handle Database save negative case
+            .catch((err,resp) => {
+                var responseCanister = canisterObject;
+                responseCanister.error={
+                    "code":"SP1001",
+                    "description":"Error Saving Data"
+                };
+                res.json().status(500);});  
+    });
+    res.json(req.body).status(200);
+    
 
    
-})
+});
 
 /*------------------------*/
 
