@@ -15,6 +15,9 @@ passport.use(new LocalStrategy({
   try {
     const userDocument = await ManagentModel.findOne({email: username}).exec();
     console.log(userDocument);
+    if(userDocument === null){
+      return done('Incorrect Username / Password');
+    }
     const passwordsMatch = await bcrypt.compare(password, userDocument.password);
 
     if (passwordsMatch) {

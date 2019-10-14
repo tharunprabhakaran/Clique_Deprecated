@@ -1,1 +1,5 @@
 .env
+
+// Ignoring nodemodules
+
+Management_Signup\node_modules\
