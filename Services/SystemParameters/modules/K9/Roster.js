@@ -1,5 +1,8 @@
+<<<<<<< HEAD
+=======
 /*jshint esversion: 6 */
 
+>>>>>>> upstream/master
 var Roaster = {
     "name":"K9-Pug",
     "version":"0.1",
@@ -10,6 +13,18 @@ var Roaster = {
             [
                 {
                     "feild":"parameter",
+<<<<<<< HEAD
+                    "assert":"isInt"
+                },
+                {
+                    "feild":"temporary",
+                    "assert":"isAlphaNumeric"
+                },
+                {
+                    "feild":"parameter1",
+                    "assert":"isString",
+                    "mandatory":false
+=======
                     "assert":"isInt",
                     "mandatory":true
                 },
@@ -22,6 +37,7 @@ var Roaster = {
                     "feild":"parameter1",
                     "assert":"isPassword",
                     "mandatory":true
+>>>>>>> upstream/master
                 
                 }
             ]
@@ -38,6 +54,15 @@ var Roaster = {
                     "assert":"isString"
                 }
             ]
+<<<<<<< HEAD
+        }
+    }
+  }
+
+  module.exports = {
+      Roaster
+  }
+=======
         },
         "createSystemParameters":{
             "validations":
@@ -62,3 +87,4 @@ var Roaster = {
   module.exports = {
       Roaster
   };
+>>>>>>> upstream/master

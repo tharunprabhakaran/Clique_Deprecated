@@ -1,0 +1,5 @@
+.env
+
+// Ignoring nodemodules
+
+Teacher_Signup\node_modules\
