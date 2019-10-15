@@ -11,9 +11,9 @@ router.post('/register', async (req,res) => {
    const userList = req.body.payLoad;
    let i = 0;
     for (const user of userList) {
-        //check email exists or not
-     //  const emailExist = await Teachers.findOne({email : user.email});
-      /*  if(emailExist){
+      //check email exists or not
+      const emailExist = await Teachers.findOne({email : user.email});
+      if(emailExist){
             cannister.metadata.service = 'Registration';
             cannister.metadata.timeStamp = Date.now();
             cannister.metadata.subService = 'ManagementSignUp';
@@ -21,9 +21,9 @@ router.post('/register', async (req,res) => {
             cannister.payLoad[i] = { "Serial Number": i+1, "email" : user.email , "Desc" : "Please retry from the data beloging to this no"};
             cannister.payLoadType = "JSON";
             cannister.error.code = "ERR001";
-            cannister.error.description = "Management already Exists";
+            cannister.error.description = "Teacher already Exists";
             return res.status(400).send(cannister);
-        }*/
+        }
         //Hash passwords
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(user.password,salt)
@@ -39,6 +39,8 @@ router.post('/register', async (req,res) => {
             phoneUno : user.phone1,
             phonetwo : user.phone2,
             bloodgroup : user.bloodgroup,
+            schoolid : user.schoolid,
+            teacherid : user.teacherid,
             email : user.email,
             password : hashPassword
         });
@@ -53,7 +55,7 @@ router.post('/register', async (req,res) => {
             cannister.payLoad[i] = { "Serial Number": i+1, "email" : user.email , "desc" : "Please retry from the data beloging to this no"};
             cannister.payLoadType = "JSON";
             cannister.error.code = "ERR001";
-            cannister.error.description = "Unaable to save user. Please Try again";
+            cannister.error.description = "Unable to save user. Please Try again";
             return res.status(400).send(cannister);
             
         }

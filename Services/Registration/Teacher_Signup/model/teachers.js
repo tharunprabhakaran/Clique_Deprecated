@@ -49,6 +49,14 @@ const teacherSchema = new mongoose.Schema({
         minlength : 6,
         maxlength : 12
     },
+    schoolid:{
+        type: Number,
+        required:true
+    },
+    teacherid:{
+        type: Number,
+        required:true
+    },
     email:{
         type: String,
         required:true,

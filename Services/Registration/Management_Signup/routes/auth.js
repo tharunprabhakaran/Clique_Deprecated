@@ -31,12 +31,15 @@ router.post('/register', async (req,res) => {
         //Create a new Management user
         const newuser = new Management({
             name : user.name,
-            doj : user.doj,
+            dob : user.dob,
             country : user.country,
             city : user.city,
             address : user.address,
             phoneUno : user.phone1,
             phonetwo : user.phone2,
+            bloodgroup : user.bloodgroup,
+            schoolid : user.schoolid,
+            personnelid : user.personnelid,
             email : user.email,
             password : hashPassword
         });
@@ -45,6 +48,7 @@ router.post('/register', async (req,res) => {
         try{
             const savedUser = await newuser.save();
         } catch(err){
+          //console.log(err);
             cannister.metadata.service = 'Registration';
             cannister.metadata.timeStamp = Date.now();
             cannister.metadata.subService = 'ManagementSignUp';
@@ -52,7 +56,7 @@ router.post('/register', async (req,res) => {
             cannister.payLoad[i] = { "Serial Number": i+1, "email" : user.email , "desc" : "Please retry from the data beloging to this no"};
             cannister.payLoadType = "JSON";
             cannister.error.code = "ERR001";
-            cannister.error.description = "Unaable to save user. Please Try again";
+            cannister.error.description = "Unable to save user. Please Try again";
             return res.status(400).send(cannister);
         }
         //Adding each saved management user to payload

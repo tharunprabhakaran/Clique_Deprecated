@@ -7,7 +7,7 @@ const managementSchema = new mongoose.Schema({
         minlength : 6,
         maxlength : 255
     },
-    doj:{
+    dob:{
         type : Date,
         required : true
     },
@@ -36,6 +36,20 @@ const managementSchema = new mongoose.Schema({
     phonetwo:{
         type: Number,
         required:true,
+    },
+    bloodgroup:{
+        type: String,
+        required:true,
+        minlength : 6,
+        maxlength : 12
+    },
+    schoolid:{
+        type: Number,
+        required:true
+    },
+    personnelid:{
+        type: Number,
+        required:true
     },
     email:{
         type: String,

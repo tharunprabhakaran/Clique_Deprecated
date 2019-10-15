@@ -40,7 +40,7 @@ app.use(cors());
 
 
 //Route Middleware
-app.use('/api/user',authroute);
+app.use('/api/management/personnel',authroute);
 
 //Default port and host
 app.set('port', process.env.PORT || 6000);
