@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const cannister = require('../config/cannister')
 const router = express.Router();
 
-/****** Registering Managment  Users  ******/
+/****** Registering Teacher  Users  ******/
 router.post('/register', async (req,res) => {
    const userList = req.body.payLoad;
    let i = 0;
@@ -22,13 +22,13 @@ router.post('/register', async (req,res) => {
             cannister.payLoadType = "JSON";
             cannister.error.code = "ERR001";
             cannister.error.description = "Teacher already Exists";
-            return res.status(400).send(cannister);
+            return res.status(400).json(cannister);
         }
         //Hash passwords
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(user.password,salt)
         
-        //Create a new Management user
+        //Create a new Teacher user
         const newuser = new Teachers({
             name : user.name,
             dob : user.dob,
@@ -44,7 +44,7 @@ router.post('/register', async (req,res) => {
             email : user.email,
             password : hashPassword
         });
-        // Adding the Teacher to table
+        // Adding the Teacher user to table
         try{
             const savedUser = await newuser.save();
         } catch(err){
@@ -56,10 +56,10 @@ router.post('/register', async (req,res) => {
             cannister.payLoadType = "JSON";
             cannister.error.code = "ERR001";
             cannister.error.description = "Unable to save user. Please Try again";
-            return res.status(400).send(cannister);
+            return res.status(400).json(cannister);
             
         }
-        //Adding each saved management user to payload
+        //Adding each saved Teacher user to payload
         cannister.payLoad[i] = { "Serial Number": i+1 , "email" : user.email, "desc" : "added to db!!"};
         i = i +1;
     }
@@ -71,11 +71,11 @@ router.post('/register', async (req,res) => {
     cannister.payLoadType = "JSON";
     cannister.error.code = "SUCC001";
     cannister.error.description = "All users are saved";
-    return res.status(200).send(cannister);
+    return res.status(200).json(cannister);
 });
 
 
-/******* LOGIN FOR MANAGEMENT USERS ******/
+/******* LOGIN FOR TEACHERS ******/
 
 router.post('/login', (req, res) => {
      passport.authenticate( 'local',
@@ -88,7 +88,7 @@ router.post('/login', (req, res) => {
            cannister.payLoadType = "JSON";
            cannister.error.code = "ERR001";
            cannister.error.description = "Incorrect username or password";
-           return res.send(cannister);
+           return res.setatus(400).json(cannister);
          }
          /** This is what ends up in our JWT */
          const payload = {
@@ -98,7 +98,7 @@ router.post('/login', (req, res) => {
          /** assigns payload to req.user */
          req.login(payload, {session: false}, (error) => {
          if (error) {
-             res.status(400).send({ error });
+             res.status(400).json({ error });
          }
          
         /** Constructing jwt token */
@@ -113,7 +113,7 @@ router.post('/login', (req, res) => {
           cannister.payLoadType = "JSON";
           cannister.error.code = "SUCC001";
           cannister.error.description = "Success";
-           return res.status(200).send(cannister);
+           return res.status(200).json(cannister);
          });
        },
      )(req, res);

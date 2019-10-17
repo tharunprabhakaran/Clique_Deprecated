@@ -9,7 +9,7 @@ const cors = require('cors');
 const passportsetup = require('./config/passportconfig');
 
 //Middleware
-app.use(bodyParser.urlencoded({ extended: false }));;
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static("public"));
 

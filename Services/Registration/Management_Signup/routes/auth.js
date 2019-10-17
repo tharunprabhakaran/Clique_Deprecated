@@ -22,7 +22,7 @@ router.post('/register', async (req,res) => {
             cannister.payLoadType = "JSON";
             cannister.error.code = "ERR001";
             cannister.error.description = "Management already Exists";
-            return res.status(400).send(cannister);
+            return res.status(400).json(cannister);
         }
         //Hash passwords
         const salt = await bcrypt.genSalt(10);
@@ -57,7 +57,7 @@ router.post('/register', async (req,res) => {
             cannister.payLoadType = "JSON";
             cannister.error.code = "ERR001";
             cannister.error.description = "Unable to save user. Please Try again";
-            return res.status(400).send(cannister);
+            return res.status(400).json(cannister);
         }
         //Adding each saved management user to payload
         cannister.payLoad[i] = { "Serial Number": i+1 , "email" : user.email, "desc" : "added to db!!"};
@@ -71,7 +71,7 @@ router.post('/register', async (req,res) => {
     cannister.payLoadType = "JSON";
     cannister.error.code = "SUCC001";
     cannister.error.description = "All users are saved";
-    return res.status(200).send(cannister);
+    return res.status(200).json(cannister);
 });
 
 
@@ -88,7 +88,7 @@ router.post('/login', (req, res) => {
            cannister.payLoadType = "JSON";
            cannister.error.code = "ERR001";
            cannister.error.description = "Incorrect username or password";
-           return res.send(cannister);
+           return res.json(cannister);
          }
          /** This is what ends up in our JWT */
          const payload = {
@@ -98,7 +98,7 @@ router.post('/login', (req, res) => {
          /** assigns payload to req.user */
          req.login(payload, {session: false}, (error) => {
          if (error) {
-             res.status(400).send({ error });
+             res.status(400).json({ error });
          }
          
         /** Constructing jwt token */
@@ -113,7 +113,7 @@ router.post('/login', (req, res) => {
           cannister.payLoadType = "JSON";
           cannister.error.code = "SUCC001";
           cannister.error.description = "Success";
-           return res.status(200).send(cannister);
+           return res.status(200).json(cannister);
          });
        },
      )(req, res);
