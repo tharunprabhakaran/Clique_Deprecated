@@ -1,5 +1,2 @@
 .env
-
-// Ignoring nodemodules
-
 node_modules\
